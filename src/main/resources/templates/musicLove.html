@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>听音乐O(∩_∩)O~~</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/musicLove.css" th:href="@{/css/musicLove.css}">
+</head>
+<body>
+        <div class="bg-blur bg"></div>
+        <div class="content-front">
+            <div class="ui grid main-height">
+                <div class="ui three wide column"></div>
+                <div class="ui five wide column">
+                    <img class="img-position ui rounded image" src="../static/images/timg.jpg" th:src="@{${currMusic.bgPicturePath}}"   alt="">
+                    <p id="picPath" class="hidden" th:text="${currMusic.bgPicturePath}"></p>
+                </div>
+                <div class="ui five wide column">
+                    <textarea id="lyric" style="display: none;" th:text="${currMusic.lyric}">
+                            [ti:嘉宾]
+                            [ar:张远]
+                            [al:嘉宾]
+                            [by:]
+                            [offset:0]
+                            [00:00.20]嘉宾 - 张远
+                            [00:00.34]词：王泽言／张远
+                            [00:00.53]曲：王泽言
+                            [00:00.67]编曲：陈禹骁/任斌
+                            [00:00.90]监制：徐怀超
+                            [00:01.06]制作人：丁培峰
+                            [00:01.26]和声：金天
+                            [00:01.39]混音：张锦亮
+                            [00:01.56]母带：丁培峰
+                            [00:01.72]录音室/录音师：TRENDY MUSIC@袁栋
+                            [00:02.05]制作公司：TRENDY MUSIC
+                            [00:02.25]SP：漫吞吞文化
+                            [00:02.45]（未经许可,不得翻唱或使用）
+                            [00:21.25]分手后第几个冬季
+                            [00:25.65]今天是星期几
+                            [00:28.84]偶尔会想起你
+                            [00:34.43]你突如其来的简讯
+                            [00:38.54]让我措手不及
+                            [00:41.75]愣住站在原地
+                            [00:47.07]当所有人都替你开心
+                            [00:50.25]我却才傻傻清醒
+                            [00:52.97]原来早已有人为你订做了嫁衣
+                            [00:58.36]感谢你特别邀请
+                            [01:01.51]来见证你的爱情
+                            [01:04.74]我时刻提醒自己 别逃避
+                            [01:10.86]拿着喜帖一步一步走近
+                            [01:14.32]他精心布置的场地
+                            [01:17.87]可惜这是属于你的风景
+                            [01:21.38]而我只是嘉宾
+                            [01:24.03]我放下所有回忆
+                            [01:27.04]来成全你的爱情
+                            [01:30.14]却始终不愿相信 这是命
+                            [01:36.16]好久不见的你有点疏离
+                            [01:39.79]握手寒暄如此客气
+                            [01:43.48]何必要在他的面前刻意
+                            [01:46.96]隐瞒我的世界 有过你
+                            [02:14.74]不知不觉钟声响起
+                            [02:19.47]你守候在原地
+                            [02:22.48]等待着他靠近
+                            [02:27.89]温柔的他单膝跪地
+                            [02:32.11]钻戒缓缓戴进
+                            [02:35.23]你的无名指里
+                            [02:40.86]当所有人都替你开心
+                            [02:44.06]我却才傻傻清醒
+                            [02:46.21]原来我们之间已没有任何关系
+                            [02:51.78]感谢你特别邀请
+                            [02:54.98]来见证你的爱情
+                            [02:58.17]我时刻提醒自己 别逃避
+                            [03:04.21]今天你妆扮得格外美丽
+                            [03:07.73]这美也曾拥在怀里
+                            [03:11.49]可惜这是你和他的婚礼
+                            [03:15.01]而我只是嘉宾
+                            [03:17.38]我放下所有回忆
+                            [03:20.58]来成全你的爱情
+                            [03:23.79]却始终不愿相信 这是命
+                            [03:29.78]说好的永远变成了曾经
+                            [03:33.35]我试着衷心祝福你
+                            [03:37.00]请原谅我不体面没出息
+                            [03:40.60]选择失陪一下 先离席
+                            [03:47.81]又不是偶像剧
+                            [03:50.98]怎么我演得那么入戏
+                            [03:55.87]这不堪入目的剧情
+                            [04:02.40]感谢你特别邀请
+                            [04:05.38]观赏你要的爱情
+                            [04:08.56]嘉宾也许是另一种宿命
+                            [04:14.68]离开你的自己事到如今
+                            [04:18.54]还有什么资格关心
+                            [04:22.14]毕竟终成眷属的人是你
+                            [04:25.66]而我只是嘉宾
+                            [04:28.17]我流尽所有回忆
+                            [04:30.99]来庆祝你的婚礼
+                            [04:34.13]却始终没有勇气 祝福你
+                            [04:40.18]谢谢你送给我最后清醒
+                            [04:43.72]把自己还给我自己
+                            [04:50.67]至少我还能够成为那个
+                            [04:54.43]见证你们爱情的嘉宾
+                            [05:01.03]遇见你的他真的好幸运
+                            [05:04.88]但愿他会比我更爱你
+                        </textarea>
+                    <div class="lyricText">
+                    </div>
+                </div>
+                <div class="ui three wide column">
+                    <div class="ui music-list-container flowing popup hidden">
+                        <table class="music-list-table">
+                            <th>
+                                  <td class="t-head">歌单</td>
+                            </th>
+                            <tbody>
+                                <tr class="music-select" th:each="music:${musicList}">
+                                    <td class="hidden" th:text="${music.id}"></td>
+                                    <td th:text="${music.name}">嘉宾</td>
+   <!--                                 <td th:text="${music.duration}">05:33</td>
+                                    <td th:text="${music.author}">张远</td>-->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="ui grid btn-bar-height">
+                <div class="ui three wide column ">
+                </div>
+                <div class="ui two wide column ">
+                    <div class="ui btn-container">
+                        <button id="pre" class="btn-pre"><i class="fast backward large icon"></i></button>
+                        <button id="play" class="btn"><i class="play large icon"></i></button>
+                        <button id="pause" class="btn-hide btn"><i class="pause large icon"></i></button>
+                        <button id="next" class="btn-next"><i class="fast forward large icon"></i></button>
+                    </div>
+                </div>
+                <div class="ui eight wide column ">
+                    <div>
+                        <div id="time" class="time">
+                            <span class="currentTime">00:00</span>
+                            /
+                            <span class="totalTime">00:00</span>
+                            <span class="musicName" th:text="${currMusic.name}">张远 - 嘉宾</span>
+                            <span id="currMusicId" class="hidden" th:text="${currMusic.id}"></span>
+                        </div>
+                    </div>
+                    <div id="progress" class="totalProgress">
+                        <div class="currentProgress"></div>
+                    </div>
+                    <audio id="audio" src="../static/music/嘉宾.flac" th:src="@{${musicTotalName}}"></audio>
+                </div>
+                <div class="ui three wide column ">
+                    <div class="ui grid">
+                        <div class="ui two wide column ">
+                            <div class="btn-list-container">
+                                <button class="btn-music-love"><i id="loveFlag" class="large heart outline icon"></i></button>
+                            </div>
+                        </div>
+                        <div class="ui two wide column">
+                            <div class="btn-list-container">
+                                <button class="btn-music-list"><i class="large list icon"></i></button>
+                            </div>
+                        </div>
+                        <div class="ui twelve wide column"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script type="text/javascript" src="../static/js/musicLove.js" th:src="@{/js/musicLove.js}">
+
+</script>
+</html>

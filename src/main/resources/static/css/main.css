@@ -1,0 +1,13 @@
+.height-background{
+    height:600px;
+    width:100%;
+}
+.button-container{
+    height:200px;
+    width:100%;
+}
+.button-padded-center{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}

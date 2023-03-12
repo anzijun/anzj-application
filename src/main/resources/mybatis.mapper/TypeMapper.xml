@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.azj.anzj.mapper.TypeMapper">
+
+    <resultMap id = "resultTypeMap" type="com.azj.anzj.pojo.Type">
+        <result property="id" column="id"></result>
+        <result property="name" column="name"></result>
+    </resultMap>
+
+    <resultMap id = "resultTopTypeMap" type="com.azj.anzj.pojo.Type">
+        <result property="id" column="id"></result>
+        <result property="name" column="name"></result>
+        <result property="count" column="cnt"></result>
+    </resultMap>
+
+    <select id = "queryAllType" resultMap="resultTypeMap">
+        select * from t_type
+   </select>
+    <select id = "getTypeById" resultMap="resultTypeMap">
+         select * from t_type where id = #{id}
+    </select>
+    <select id = "getTypeByName" resultMap="resultTypeMap">
+         select * from t_type where name = #{name}
+    </select>
+
+    <select id="listTopType" resultMap="resultTopTypeMap">
+        SELECT t.id id,t.name NAME ,IFNULL(t1.cnt,0) cnt
+        FROM t_type t
+                 LEFT JOIN
+                 (SELECT typeid tid,COUNT(1) cnt FROM t_blog GROUP BY typeid) t1
+                 ON t.id = t1.tid
+        ORDER BY t1.cnt DESC LIMIT #{limit}
+    </select>
+
+    <insert id = "addType" parameterType="com.azj.anzj.pojo.Type">
+         insert into t_type(id,name) values (#{id},#{name})
+    </insert>
+
+    <!--更新分类-->
+    <update id="updateType" parameterType="com.azj.anzj.pojo.Type">
+         update t_type set name=#{name} where id = #{id}
+    </update>
+
+    <delete id="deleteType" parameterType="int">
+        delete from t_type where id=#{id}
+    </delete>
+
+</mapper>

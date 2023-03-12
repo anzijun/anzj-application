@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.azj.anzj.mapper.BlogsToTagsMapper">
+
+    <resultMap type="com.azj.anzj.pojo.Tag" id="resultTagsMap">
+        <result property="id" column="id" />
+        <result property="name" column="name"/>
+    </resultMap>
+
+    <delete id = "deleteRel" parameterType="java.lang.Integer">
+       delete from t_blog_tag where blog_id = #{blogId}
+    </delete>
+
+    <insert id="addRel">
+        insert into t_blog_tag(blog_id,tag_id)
+        values
+            <foreach collection="tagIds" item="tagId" separator=",">
+                (#{blogId},#{tagId})
+            </foreach>
+    </insert>
+
+</mapper>

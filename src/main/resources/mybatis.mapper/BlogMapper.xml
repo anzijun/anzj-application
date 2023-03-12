@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.azj.anzj.mapper.BlogMapper">
+
+    <resultMap id="resultBlogsMap" type="com.azj.anzj.pojo.Blog">
+        <result property="id" column="id" />
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="firstPicture" column="firstPicture"/>
+        <result property="flag" column="flag"/>
+        <result property="viewCount" column="viewCount"/>
+        <result property="typeId" column="typeId"/>
+        <result property="appreciation" column="appreciation"/>
+        <result property="shareStatement" column="shareStatement"/>
+        <result property="commentabled" column="commentabled"/>
+        <result property="published" column="published"/>
+        <result property="recommend" column="recommend"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="description" column="description"/>
+        <association property="type" javaType="com.azj.anzj.pojo.Type">
+            <id property="id" column="tid"/>
+            <result property="name" column="tname"/>
+        </association>
+        <association property="user" javaType="com.azj.anzj.pojo.User">
+            <id property="id" column="uid"/>
+            <result property="nickname" column="nickname"/>
+            <result property="email" column="email"/>
+            <result property="avatar" column="avatar"/>
+        </association>
+    </resultMap>
+    <resultMap type="com.azj.anzj.pojo.Blog" id="BlogToTagsMap" extends="resultBlogsMap">
+        <collection property="tags" ofType="com.azj.anzj.pojo.Tag">
+                <id property="id" column="cid"/>
+                <result property="name" column="cname"/>
+        </collection>
+    </resultMap>
+
+    <select id="allBlogs" resultMap="resultBlogsMap">
+        select b.* ,t.id tid,t.name tname,u.id uid,u.nickname nickname, u.email email,u.avatar avatar
+        from t_blog b
+        left join t_type t on b.typeid=t.id
+        left join t_user u on b.author=u.id
+    </select>
+
+    <!--依据博客id查询所对应的全部标签-->
+    <select id="getBlogTagsById" parameterType="int" resultMap="BlogToTagsMap">
+
+        select b.* ,t.id tid,t.name tname,u.id uid,u.nickname nickname, u.email email,u.avatar avatar, c.id cid,c.name cname
+        from t_blog b
+        left join t_type t on b.typeid=t.id
+        left join t_user u on b.author=u.id
+        left join t_blog_tag r on b.id = r.blog_id
+        left join t_tag  c on r.tag_id = c.id
+        where b.id=#{id}
+    </select>
+
+    <!--依据标签id查询所对应的全部博客-->
+    <select id="getTagBlogByTagId" parameterType="int" resultMap="BlogToTagsMap">
+
+        select b.* ,t.id tid,t.name tname,u.id uid,u.nickname nickname, u.email email,u.avatar avatar, c.id cid,c.name cname
+        from t_blog b
+        left join t_type t on b.typeid=t.id
+        left join t_user u on b.author=u.id
+        left join t_blog_tag r on b.id = r.blog_id
+        left join t_tag  c on r.tag_id = c.id
+        where c.id=#{tagId}
+    </select>
+
+    <!--查询博客列表-->
+    <select id="queryBlogs" resultType="com.azj.anzj.pojo.Blog" parameterType="com.azj.anzj.vo.BlogQuery" resultMap="resultBlogsMap">
+        select b.*,t.id tid,t.name tname from t_blog b,t_type t where b.typeid=t.id
+        <if test="recommend!=null">
+            and b.recommend = #{recommend}
+        </if>
+        <if test="title!=null and title!=''">
+            and b.title like concat(concat('%',#{title}),'%')
+        </if>
+        <if test="typeId!=null and typeId!=''">
+            and b.typeid=#{typeId}
+        </if>
+    </select>
+
+    <select id="queryIndexBlogs" resultMap="resultBlogsMap" parameterType="String">
+        select b.* ,t.id tid,t.name tname,u.id uid,u.nickname nickname, u.email email,u.avatar avatar
+        from t_blog b
+                 left join t_type t on b.typeid=t.id
+                 left join t_user u on b.author=u.id
+        where b.title like concat(concat('%',#{query}),'%')
+           or b.content like concat(concat('%',#{query}),'%')
+    </select>
+
+    <select id="queryTypesBlogs" resultMap="resultBlogsMap" parameterType="int">
+        select b.* ,t.id tid,t.name tname,u.id uid,u.nickname nickname, u.email email,u.avatar avatar
+        from t_blog b
+                 left join t_type t on b.typeid=t.id
+                 left join t_user u on b.author=u.id
+        where b.typeId = #{typeId}
+    </select>
+    <select id = "tuiJianList" resultType="com.azj.anzj.pojo.Blog" parameterType="int">
+        SELECT * FROM t_blog WHERE recommend IS TRUE ORDER BY updatetime DESC LIMIT #{limit}
+    </select>
+
+    <select id="getBlogByTitle" resultType="com.azj.anzj.pojo.Blog" parameterType="String">
+        select * from t_blog where title=#{title}
+    </select>
+
+    <select id="queryYear" resultType="String">
+        SELECT DATE_FORMAT(b. updatetime,'%Y') YEAR FROM t_blog b GROUP BY YEAR ORDER BY YEAR DESC
+    </select>
+
+    <select id="queryBlogByYear" resultType="com.azj.anzj.pojo.Blog" parameterType="String">
+        select * from t_blog where DATE_FORMAT(updatetime,'%Y') = #{year}
+    </select>
+
+    <select id="countBlogs" resultType="int">
+        select count(1) from t_blog
+    </select>
+
+    <insert id="addBlog" parameterType="com.azj.anzj.pojo.Blog">
+        insert into t_blog(id,title,content,firstPicture,flag,viewCount,typeId,appreciation,shareStatement,commentabled,published
+        ,recommend,createTime,updateTime,author,description) values(#{id},#{title},#{content},#{firstPicture},#{flag},#{viewCount},#{type.id},#{appreciation}
+        ,#{shareStatement},#{commentabled},#{published},#{recommend},#{createTime},#{updateTime},#{user.id},#{description})
+    </insert>
+
+    <update id="updateBlog" parameterType="com.azj.anzj.pojo.Blog">
+        update t_blog set title=#{title},content=#{content},firstPicture=#{firstPicture},flag=#{flag},viewCount=#{viewCount},typeId=#{type.id}
+         ,appreciation=#{appreciation},shareStatement=#{shareStatement},commentabled=#{commentabled},published=#{published},recommend=#{recommend}
+         ,updateTime=#{updateTime},author=#{user.id},description=#{description}
+         where id=#{id}
+    </update>
+
+    <update id="updateViewCount">
+        update t_blog set viewCount = viewCount + 1 where id = #{id}
+    </update>
+
+    <delete id="deleteBlog" parameterType="int">
+        delete from t_blog where id=#{id}
+    </delete>
+
+</mapper>

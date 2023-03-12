@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.azj.anzj.mapper.TagMapper">
+
+    <resultMap type="com.azj.anzj.pojo.Tag" id="resultTagsMap">
+        <result property="id" column="id" />
+        <result property="name" column="name"/>
+    </resultMap>
+
+    <select id = "queryAllTag" resultMap="resultTagsMap">
+        select * from t_tag
+   </select>
+    <select id = "getTagById" resultMap="resultTagsMap">
+         select * from t_tag where id = #{id}
+    </select>
+    <select id = "getTagByName" resultMap="resultTagsMap">
+         select * from t_tag where name = #{name}
+    </select>
+    <select id = "listTag" resultMap="resultTagsMap">
+         select * from t_tag where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <resultMap type="com.azj.anzj.pojo.Tag" id="resultTopTagsMap">
+        <result property="id" column="id" />
+        <result property="name" column="name"/>
+        <result property="count" column="cnt"></result>
+    </resultMap>
+
+    <select id = "listTopTag" resultMap="resultTopTagsMap">
+        SELECT t.id id,t.name name,IFNULL(t1.cnt,0) cnt
+        FROM t_tag t
+        LEFT JOIN
+             (SELECT t2.tag_id tid,COUNT(1) cnt
+              FROM t_blog t1
+                       LEFT JOIN t_blog_tag t2 ON t1.id = t2.blog_id
+              GROUP BY t2.tag_id
+             ) t1 ON t.id = t1.tid
+        ORDER BY t1.cnt DESC LIMIT #{limit}
+    </select>
+
+    <insert id = "addTag" parameterType="com.azj.anzj.pojo.Tag">
+         insert into t_tag(id,name) values (#{id},#{name})
+    </insert>
+
+    <!--更新分类-->
+    <update id="updateTag" parameterType="com.azj.anzj.pojo.Tag">
+         update t_tag set name=#{name} where id = #{id}
+    </update>
+
+
+    <delete id="deleteTag" parameterType="int">
+        delete from t_tag where id=#{id}
+    </delete>
+
+</mapper>

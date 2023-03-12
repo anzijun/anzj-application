@@ -1,0 +1,12 @@
+server:
+  port: 80
+spring:
+  datasource:
+    username: anzj
+    password: anzj@123!
+    url: jdbc:mysql://8.141.177.136:3306/anzjblog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+mybatis:
+  type-aliases-package: com.azj.anzj.pojo
+  mapper-locations: classpath:mybatis.mapper/*.xml
